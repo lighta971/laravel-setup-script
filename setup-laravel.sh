@@ -19,9 +19,9 @@ read -e generators
 if [[ $generators == "yes" ]]
     then
         echo "Adding Way/Generators to $appname"
-        gsed -i '8 a\ "require-dev" : { "way/generators": "dev-master" },' composer.json
+        sed -i '8 a\ "require-dev" : { "way/generators": "dev-master" },' composer.json
         composer update
-        gsed -i "115 a\ 'Way\\\Generators\\\GeneratorsServiceProvider'," app/config/app.php
+        sed -i "115 a\ 'Way\\\Generators\\\GeneratorsServiceProvider'," app/config/app.php
 fi
 
 # Update app/bootstrap/start.php with env function
@@ -29,8 +29,8 @@ echo -n "Set up Development Environment? [yes|no] "
 read -e development
 if [[ $development == "yes" ]]
     then
-        gsed -i -e'29,33d' bootstrap/start.php
-        gsed -i "28 a\ \$env = \$app->detectEnvironment(function() { return getenv('ENV') ?: 'development'; });" bootstrap/start.php
+        sed -i -e'29,33d' bootstrap/start.php
+        sed -i "28 a\ \$env = \$app->detectEnvironment(function() { return getenv('ENV') ?: 'development'; });" bootstrap/start.php
 fi
 
 # Create mysql database
